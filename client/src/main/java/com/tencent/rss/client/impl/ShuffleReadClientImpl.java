@@ -38,8 +38,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.tencent.rss.storage.util.StorageType;
-import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.roaringbitmap.longlong.Roaring64NavigableMap;
 import org.slf4j.Logger;
@@ -80,6 +78,7 @@ public class ShuffleReadClientImpl implements ShuffleReadClient {
     this.partitionId = partitionId;
     this.blockIdBitmap = blockIdBitmap;
     this.taskIdBitmap = taskIdBitmap;
+
     CreateShuffleReadHandlerRequest request = new CreateShuffleReadHandlerRequest();
     request.setStorageType(storageType);
     request.setAppId(appId);
