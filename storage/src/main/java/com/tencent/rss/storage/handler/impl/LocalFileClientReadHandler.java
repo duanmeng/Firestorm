@@ -42,7 +42,7 @@ public class LocalFileClientReadHandler extends AbstractFileClientReadHandler {
   private int readBufferSize;
   private List<ShuffleServerClient> shuffleServerClients;
   private List<ShuffleDataSegment> shuffleDataSegments = Lists.newLinkedList();
-  private Roaring64NavigableMap expectBlockIds;
+  private long indexLength;
 
   public LocalFileClientReadHandler(
       String appId,
@@ -53,7 +53,7 @@ public class LocalFileClientReadHandler extends AbstractFileClientReadHandler {
       int partitionNum,
       int readBufferSize,
       List<ShuffleServerClient> shuffleServerClients,
-      Roaring64NavigableMap expectBlockIds) {
+      long indexLength) {
     this.appId = appId;
     this.shuffleId = shuffleId;
     this.partitionId = partitionId;
@@ -62,13 +62,13 @@ public class LocalFileClientReadHandler extends AbstractFileClientReadHandler {
     this.partitionNum = partitionNum;
     this.readBufferSize = readBufferSize;
     this.shuffleServerClients = shuffleServerClients;
-    this.expectBlockIds = expectBlockIds;
+    this.indexLength = indexLength;
   }
 
   public ShuffleIndexResult readShuffleIndex() {
     boolean readSuccessful = false;
     ShuffleIndexResult shuffleIndexResult = null;
-    long indexDataLength = expectBlockIds.getLongCardinality() * FileBasedShuffleSegment.SEGMENT_SIZE;
+    long indexDataLength = indexLength * FileBasedShuffleSegment.SEGMENT_SIZE;
     RssGetShuffleIndexRequest request = new RssGetShuffleIndexRequest(
         appId, shuffleId, partitionId, partitionNumPerRange, partitionNum, indexDataLength);
 
@@ -94,8 +94,8 @@ public class LocalFileClientReadHandler extends AbstractFileClientReadHandler {
     boolean readSuccessful = false;
     ShuffleDataResult result = null;
     RssGetShuffleDataRequest request = new RssGetShuffleDataRequest(
-        appId, shuffleId, partitionId, partitionNumPerRange, partitionNum, readBufferSize,
-        -1, shuffleDataSegment.getOffset(), shuffleDataSegment.getLength());
+        appId,shuffleId, partitionId, partitionNumPerRange, partitionNum, readBufferSize,
+        shuffleDataSegment.getOffset(), shuffleDataSegment.getLength());
     for (ShuffleServerClient shuffleServerClient : shuffleServerClients) {
       try {
         RssGetShuffleDataResponse response = shuffleServerClient.getShuffleData(request);

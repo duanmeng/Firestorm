@@ -421,7 +421,6 @@ public class ShuffleServerGrpcClient extends GrpcClient implements ShuffleServer
         .setPartitionNumPerRange(request.getPartitionNumPerRange())
         .setPartitionNum(request.getPartitionNum())
         .setReadBufferSize(request.getReadBufferSize())
-        .setSegmentIndex(request.getSegmentIndex())
         .setOffset(request.getOffset())
         .setLength(request.getLength())
         .build();
@@ -436,8 +435,7 @@ public class ShuffleServerGrpcClient extends GrpcClient implements ShuffleServer
     RssGetShuffleDataResponse response;
     switch (statusCode) {
       case SUCCESS:
-        response = new RssGetShuffleDataResponse(ResponseStatusCode.SUCCESS);
-        response.setShuffleData(rpcResponse.getData().toByteArray());
+        response = new RssGetShuffleDataResponse(ResponseStatusCode.SUCCESS, rpcResponse.getData().toByteArray());
         break;
       default:
         String msg = "Can't get shuffle data from " + host + ":" + port

@@ -151,7 +151,7 @@ public class RssUtils {
     return transIndexDataToSegments(indexData, readBufferSize);
   }
 
-  public static List<ShuffleDataSegment> transIndexDataToSegments(byte[] indexData, int readBufferSize) {
+  private static List<ShuffleDataSegment> transIndexDataToSegments(byte[] indexData, int readBufferSize) {
     ByteBuffer byteBuffer = ByteBuffer.wrap(indexData);
     List<BufferSegment> bufferSegments = Lists.newArrayList();
     List<ShuffleDataSegment> dataFileSegments = Lists.newArrayList();

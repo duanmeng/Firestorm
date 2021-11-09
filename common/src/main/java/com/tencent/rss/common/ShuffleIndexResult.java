@@ -46,5 +46,4 @@ public class ShuffleIndexResult {
   public boolean isEmpty() {
     return indexData == null;
   }
-
 }

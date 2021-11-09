@@ -79,18 +79,6 @@ public class ShuffleReadClientImpl implements ShuffleReadClient {
     this.blockIdBitmap = blockIdBitmap;
     this.taskIdBitmap = taskIdBitmap;
 
-    List<Long> removeBlockIds = Lists.newArrayList();
-    blockIdBitmap.forEach(bid -> {
-          if (!taskIdBitmap.contains(bid & Constants.MAX_TASK_ATTEMPT_ID)) {
-            removeBlockIds.add(bid);
-          }
-        }
-    );
-    
-    for (long rid : removeBlockIds) {
-      blockIdBitmap.removeLong(rid);
-    }
-
     CreateShuffleReadHandlerRequest request = new CreateShuffleReadHandlerRequest();
     request.setStorageType(storageType);
     request.setAppId(appId);
@@ -105,6 +93,19 @@ public class ShuffleReadClientImpl implements ShuffleReadClient {
     request.setHadoopConf(hadoopConf);
     request.setExpectBlockIds(blockIdBitmap);
     request.setProcessBlockIds(processedBlockIds);
+    request.setIndexLength(blockIdBitmap.getLongCardinality());
+
+    List<Long> removeBlockIds = Lists.newArrayList();
+    blockIdBitmap.forEach(bid -> {
+          if (!taskIdBitmap.contains(bid & Constants.MAX_TASK_ATTEMPT_ID)) {
+            removeBlockIds.add(bid);
+          }
+        }
+    );
+
+    for (long rid : removeBlockIds) {
+      blockIdBitmap.removeLong(rid);
+    }
 
     clientReadHandler = ShuffleHandlerFactory.getInstance().createShuffleReadHandler(request);
   }

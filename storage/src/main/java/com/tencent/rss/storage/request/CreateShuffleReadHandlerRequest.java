@@ -40,6 +40,7 @@ public class CreateShuffleReadHandlerRequest {
   private List<ShuffleServerInfo> shuffleServerInfoList;
   private Roaring64NavigableMap expectBlockIds;
   private Roaring64NavigableMap processBlockIds;
+  private long indexLength;
 
   public CreateShuffleReadHandlerRequest() {
   }
@@ -154,5 +155,13 @@ public class CreateShuffleReadHandlerRequest {
 
   public Roaring64NavigableMap getProcessBlockIds() {
     return processBlockIds;
+  }
+
+  public void setIndexLength(long indexLength) {
+    this.indexLength = indexLength;
+  }
+
+  public long getIndexLength() {
+    return indexLength;
   }
 }

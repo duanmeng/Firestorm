@@ -439,7 +439,7 @@ public class ShuffleServerGrpcService extends ShuffleServerImplBase {
     int partitionNumPerRange = request.getPartitionNumPerRange();
     int partitionNum = request.getPartitionNum();
     StatusCode status = StatusCode.SUCCESS;
-    String msg = "OK";
+    String msg = "SUCCESS";
     GetShuffleIndexResponse reply;
     String requestInfo = "appId[" + appId + "], shuffleId[" + shuffleId + "], partitionId["
         + partitionId + "]";

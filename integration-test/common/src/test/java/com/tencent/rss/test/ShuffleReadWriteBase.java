@@ -149,7 +149,7 @@ public abstract class ShuffleReadWriteBase extends IntegrationTestBase {
     ShuffleDataSegment segment = sds.get(segmentIndex);
     RssGetShuffleDataRequest rgsdr = new RssGetShuffleDataRequest(
         appId, shuffleId, partitionId, partitionNumPerRange, partitionNum, readBufferSize,
-        segmentIndex, segment.getOffset(), segment.getLength());
+        segment.getOffset(), segment.getLength());
 
     return new ShuffleDataResult(
         shuffleServerClient.getShuffleData(rgsdr).getShuffleData(),
@@ -182,7 +182,7 @@ public abstract class ShuffleReadWriteBase extends IntegrationTestBase {
     ShuffleDataSegment segment = sds.get(segmentIndex);
     RssGetShuffleDataRequest rgsdr = new RssGetShuffleDataRequest(
         appId, shuffleId, partitionId, partitionNumPerRange, partitionNum, readBufferSize,
-        segmentIndex, segment.getOffset(), segment.getLength());
+        segment.getOffset(), segment.getLength());
 
     return new ShuffleDataResult(
         shuffleServerClient.getShuffleData(rgsdr).getShuffleData(),

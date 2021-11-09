@@ -72,9 +72,8 @@ message GetShuffleDataRequest {
   int32 partitionNumPerRange = 4;
   int32 partitionNum = 5;
   int32 readBufferSize = 6;
-  int32 segmentIndex = 7;
-  int64 offset = 8;
-  int32 length = 9;
+  int64 offset = 7;
+  int32 length = 8;
 }
 
 message GetShuffleDataResponse {
@@ -94,8 +93,8 @@ message GetShuffleIndexRequest {
 
 message GetShuffleIndexResponse {
   bytes indexData = 1;
-  StatusCode status = 3;
-  string retMsg = 4;
+  StatusCode status = 2;
+  string retMsg = 3;
 }
 
 message ReportShuffleResultRequest {
