@@ -457,6 +457,7 @@ public class ShuffleServerGrpcClient extends GrpcClient implements ShuffleServer
         .setPartitionId(request.getPartitionId())
         .setPartitionNumPerRange(request.getPartitionNumPerRange())
         .setPartitionNum(request.getPartitionNum())
+        .setLength(request.getLength())
         .build();
     long start = System.currentTimeMillis();
     GetShuffleIndexResponse rpcResponse = blockingStub.getShuffleIndex(rpcRequest);
@@ -488,15 +489,6 @@ public class ShuffleServerGrpcClient extends GrpcClient implements ShuffleServer
   @Override
   public String getClientInfo() {
     return "ShuffleServerGrpcClient for host[" + host + "], port[" + port + "]";
-  }
-
-  private List<BufferSegment> toBufferSegments(List<ShuffleDataBlockSegment> blockSegments) {
-    List<BufferSegment> ret = Lists.newArrayList();
-    for (ShuffleDataBlockSegment segment : blockSegments) {
-      ret.add(new BufferSegment(segment.getBlockId(), segment.getOffset(),
-          segment.getLength(), segment.getUncompressLength(), segment.getCrc(), segment.getTaskAttemptId()));
-    }
-    return ret;
   }
 
   private List<ShufflePartitionRange> toShufflePartitionRanges(List<PartitionRange> partitionRanges) {
